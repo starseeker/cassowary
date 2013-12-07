@@ -14,7 +14,7 @@
 #define CL_H
 
 #if defined(HAVE_CONFIG_H) && !defined(CONFIG_H_INCLUDED) && !defined(CONFIG_INLINE_H_INCLUDED)
-#include <cassowary/config-inline.h>
+#include "config-inline.h"
 #define CONFIG_INLINE_H_INCLUDED
 #endif
 
@@ -26,22 +26,22 @@
 #endif
 
 #if defined(HAVE_CONFIG_H) && !defined(CONFIG_H_INCLUDED) && !defined(CONFIG_INLINE_H_INCLUDED)
-#include <cassowary/config-inline.h>
+#include "config-inline.h"
 #define CONFIG_INLINE_H_INCLUDED
 #endif
 
-#include "cassowary/ClVariable.h"
-#include "cassowary/ClSimplexSolver.h"
-#include "cassowary/ClLinearEquation.h"
-#include "cassowary/ClLinearInequality.h"
-#include "cassowary/ClErrors.h"
-#include "cassowary/ClEditConstraint.h"
-#include "cassowary/ClStayConstraint.h"
-#include "cassowary/ClReader.h"
-#include "cassowary/ClConstraint.h"
+#include "ClVariable.h"
+#include "ClSimplexSolver.h"
+#include "ClLinearEquation.h"
+#include "ClLinearInequality.h"
+#include "ClErrors.h"
+#include "ClEditConstraint.h"
+#include "ClStayConstraint.h"
+#include "ClReader.h"
+#include "ClConstraint.h"
 #if defined(CL_HAVE_GTL) && defined(CL_BUILD_FD_SOLVER)
-#include "cassowary/ClFDBinaryOneWayConstraint.h"
-#include "cassowary/ClFDSolver.h"
+#include "ClFDBinaryOneWayConstraint.h"
+#include "ClFDSolver.h"
 #endif
 
 extern const char *szCassowaryVersion;
