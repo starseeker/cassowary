@@ -165,6 +165,8 @@ endif(NOT CMAKE_CONFIGURATION_TYPES)
 find_package(FLEX REQUIRED)
 find_package(BISON REQUIRED)
 
+add_subdirectory(src/other/GTL)
+
 configure_file(include/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/include/config.h)
 
 add_subdirectory(src)
