@@ -14,13 +14,6 @@
 
 ClSolver &
 ClSolver::AddConstraint(ClConstraint *const ) 
-    throw(ExCLTooDifficultSpecial,
-          ExCLStrictInequalityNotAllowed,
-          ExCLReadOnlyNotAllowed,
-          ExCLEditMisuse,
-          ExCLRequiredFailure,
-          ExCLRequiredFailureWithExplanation,
-          ExCLInternalError)
 {
   return *this;
 }

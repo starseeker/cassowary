@@ -21,7 +21,6 @@
 #include "ClVariable.h"
 #include "debug.h"
 #include <GTL/topsort.h>
-#include <pair.h>
 #include <math.h>
 #include <stdarg.h>
 

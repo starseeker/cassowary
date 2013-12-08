@@ -3,6 +3,8 @@ include_directories(
 	${CMAKE_CURRENT_SOURCE_DIR}
 	${CMAKE_CURRENT_BINARY_DIR}/../include
 	${CMAKE_CURRENT_SOURCE_DIR}/../include
+	${CMAKE_CURRENT_BINARY_DIR}/other/GTL/include
+	${CMAKE_CURRENT_SOURCE_DIR}/other/GTL/include
 	)
 
 BISON_TARGET(ClReader ClReader.y ${CMAKE_CURRENT_BINARY_DIR}/ClReader.cc COMPILE_FLAGS "-d -pcl")
@@ -25,6 +27,10 @@ set(cassowary_sources
 	${FLEX_ClReader-lex_OUTPUTS}
 	${BISON_ClReader_OUTPUTS}
 	ClC.cc
+	ClFDSolver.cc
+	ClFDVariable.cc
+	ClFDConnectorVariable.cc
+	ClFDBinaryOneWayConstraint.cc
 )
 
 add_library(cassowary SHARED ${cassowary_sources})

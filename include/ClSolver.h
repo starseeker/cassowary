@@ -34,15 +34,7 @@ class ClSolver {
     { } 
 
   // Add the constraint cn to the solver
-  virtual ClSolver &AddConstraint(ClConstraint *const pcn) 
-    throw(ExCLTooDifficultSpecial,
-          ExCLStrictInequalityNotAllowed,
-          ExCLReadOnlyNotAllowed,
-          ExCLEditMisuse,
-          ExCLRequiredFailure,
-          ExCLRequiredFailureWithExplanation,
-          ExCLInternalError)
-      = 0;
+  virtual ClSolver &AddConstraint(ClConstraint *const pcn) = 0;
 
   // Remove the constraint cn from the solver
   virtual ClSolver &RemoveConstraint(ClConstraint *const pcn) = 0;
