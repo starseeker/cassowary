@@ -4,8 +4,8 @@ include_directories(
 	${CMAKE_CURRENT_SOURCE_DIR}/../include
 	)
 
-BISON_TARGET(ClReader ClReader.y ${CMAKE_CURRENT_BINARY_DIR}/ClReader.cc)
-FLEX_TARGET(ClReader-lex ClReader.l ${CMAKE_CURRENT_BINARY_DIR}/ClReader-lex.cc)
+BISON_TARGET(ClReader ClReader.y ${CMAKE_CURRENT_BINARY_DIR}/ClReader.cc COMPILE_FLAGS "-d -pcl")
+FLEX_TARGET(ClReader-lex ClReader.l ${CMAKE_CURRENT_BINARY_DIR}/ClReader-lex.cc COMPILE_FLAGS "-Pcl")
 ADD_FLEX_BISON_DEPENDENCY(ClReader-lex ClReader)
 
 set(cassowary_sources
