@@ -27,5 +27,5 @@ set(cassowary_sources
 	ClC.cc
 )
 
-add_library(cassowary ${cassowary_sources})
-
+add_library(cassowary SHARED ${cassowary_sources})
+target_link_libraries(cassowary gtl)
