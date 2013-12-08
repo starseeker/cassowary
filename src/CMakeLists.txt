@@ -1,6 +1,7 @@
 include_directories(
 	${CMAKE_CURRENT_BINARY_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}
+	${CMAKE_CURRENT_SOURCE_DIR}/../include
 	)
 
 BISON_TARGET(ClReader ClReader.y ${CMAKE_CURRENT_BINARY_DIR}/ClReader.cc)
