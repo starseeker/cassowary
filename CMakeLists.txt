@@ -168,6 +168,7 @@ find_package(BISON REQUIRED)
 add_subdirectory(src/other/GTL)
 
 configure_file(include/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/include/config.h)
+add_definitions(-DHAVE_CONFIG_H)
 
 add_subdirectory(src)
 
