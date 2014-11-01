@@ -30,7 +30,6 @@
     <ClCompile Include="..\..\src\ClVariable.cc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\cassowary\auto_ptr.h" />
     <ClInclude Include="..\..\cassowary\Cassowary.h" />
     <ClInclude Include="..\..\cassowary\Cl.h" />
     <ClInclude Include="..\..\cassowary\ClAbstractVariable.h" />

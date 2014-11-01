@@ -22,7 +22,6 @@
 #include "Cassowary.h"
 #include "ClErrors.h"
 #include <memory>
-#include "cl_auto_ptr.h"
 
 #ifdef USE_GC
 class ClAbstractVariable : public gc {
@@ -44,7 +43,8 @@ class ClAbstractVariable {
 
     ClAbstractVariable(long varnumber, char *prefix) : _pv(0) {
         std::size_t size = 16 + strlen(prefix);
-        cl_auto_ptr<char> pch(new char[size]);
+		std::unique_ptr<char[]> pch = std::unique_ptr<char[]>(new char[size]);
+
         iVariableNumber++;
 #ifdef CL_FIND_LEAK
         ++cAbstractVariables;

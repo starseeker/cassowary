@@ -17,7 +17,6 @@
 #include "ClSlackVariable.h"
 #include "ClObjectiveVariable.h"
 #include "ClDummyVariable.h"
-#include "cl_auto_ptr.h"
 #include <algorithm>
 #include <float.h>
 #include <sstream>
@@ -950,12 +949,13 @@ ClLinearExpression *ClSimplexSolver::NewExpression(const ClConstraint *pcn,
     cerr << "cn.IsRequired() == " << pcn->IsRequired() << endl;
 #endif
     const ClLinearExpression &cnExpr = pcn->Expression();
-    cl_auto_ptr<ClLinearExpression> pexpr(
-        new ClLinearExpression(cnExpr.Constant()));
-    cl_auto_ptr<ClSlackVariable> pslackVar;
-    cl_auto_ptr<ClDummyVariable> pdummyVar;
-    cl_auto_ptr<ClSlackVariable> peminus(0);
-    cl_auto_ptr<ClSlackVariable> peplus(0);
+	auto pexpr = std::make_unique<ClLinearExpression>(cnExpr.Constant());
+   	
+	std::unique_ptr<ClSlackVariable> pslackVar;
+	std::unique_ptr<ClDummyVariable> pdummyVar;
+	std::unique_ptr<ClSlackVariable> peminus;
+	std::unique_ptr<ClSlackVariable> peplus;
+
     const ClVarToNumberMap &cnTerms = cnExpr.Terms();
     ClVarToNumberMap::const_iterator it = cnTerms.begin();
     for (; it != cnTerms.end(); ++it) {
@@ -980,7 +980,9 @@ ClLinearExpression *ClSimplexSolver::NewExpression(const ClConstraint *pcn,
         // Since both of these variables are newly created we can just Add
         // them to the Expression (they can't be basic).
         ++_slackCounter;
-        ReinitializeAutoPtr(pslackVar, new ClSlackVariable(_slackCounter, "s"));
+		pslackVar.reset(new ClSlackVariable(_slackCounter, "s"));
+
+        //ReinitializeAutoPtr(pslackVar, new ClSlackVariable(_slackCounter, "s"));
         pexpr->setVariable(*pslackVar, -1);
         // index the constraint under its slack variable and vice-versa
         _markerVars[pcn] = pslackVar.get();
@@ -988,8 +990,8 @@ ClLinearExpression *ClSimplexSolver::NewExpression(const ClConstraint *pcn,
 
         if (!pcn->IsRequired()) {
             ++_slackCounter;
-            ReinitializeAutoPtr(peminus,
-                                new ClSlackVariable(_slackCounter, "em"));
+			peminus.reset(new ClSlackVariable(_slackCounter, "em"));
+
             pexpr->setVariable(*peminus, 1.0);
             // Add emnius to the objective function with the appropriate weight
             ClLinearExpression *pzRow = RowExpression(_objective);
@@ -1008,8 +1010,8 @@ ClLinearExpression *ClSimplexSolver::NewExpression(const ClConstraint *pcn,
             // for this constraint.  The dummy variable is never allowed to
             // enter the basis when pivoting.
             ++_dummyCounter;
-            ReinitializeAutoPtr(pdummyVar,
-                                new ClDummyVariable(_dummyCounter, "d"));
+			pdummyVar.reset(new ClDummyVariable(_dummyCounter, "d"));
+
             pexpr->setVariable(*pdummyVar, 1.0);
             _markerVars[pcn] = pdummyVar.get();
             _constraintsMarked[pdummyVar.get()] = pcn;
@@ -1022,10 +1024,8 @@ ClLinearExpression *ClSimplexSolver::NewExpression(const ClConstraint *pcn,
             //       expr = eplus - eminus,
             // in other words:  expr-eplus+eminus=0
             ++_slackCounter;
-            ReinitializeAutoPtr(peplus,
-                                new ClSlackVariable(_slackCounter, "ep"));
-            ReinitializeAutoPtr(peminus,
-                                new ClSlackVariable(_slackCounter, "em"));
+			peplus.reset(new ClSlackVariable(_slackCounter, "ep"));
+			peminus.reset(new ClSlackVariable(_slackCounter, "em"));
 
             pexpr->setVariable(*peplus, -1.0);
             pexpr->setVariable(*peminus, 1.0);

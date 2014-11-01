@@ -59,9 +59,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\cassowary\auto_ptr.h">
-      <Filter>source</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\cassowary\Cassowary.h">
       <Filter>source</Filter>
     </ClInclude>
