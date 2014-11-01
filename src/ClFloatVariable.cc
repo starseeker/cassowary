@@ -17,7 +17,7 @@
 #endif
 
 #ifndef CL_NO_IO
-ostream &ClFloatVariable::PrintOn(ostream &xo) const {
+std::ostream &ClFloatVariable::PrintOn(std::ostream &xo) const {
     xo << "[" << Name() << ":" << _value << "]";
     return xo;
 }

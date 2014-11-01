@@ -30,26 +30,27 @@ class ClAbstractVariable : public gc {
 class ClAbstractVariable {
 #endif
   public:
-    ClAbstractVariable(string Name = "") : _name(Name), _pv(0) {
+    ClAbstractVariable(std::string Name = "") : _name(Name), _pv(0) {
         ++iVariableNumber;
 #ifdef CL_FIND_LEAK
         ++cAbstractVariables;
 #endif
         if (Name.length() == 0) {
             char sz[16];
-            sprintf(sz, "v%ld", iVariableNumber);
-            _name = string(sz);
+            sprintf_s(sz, "v%ld", iVariableNumber);
+            _name = std::string(sz);
         }
     }
 
     ClAbstractVariable(long varnumber, char *prefix) : _pv(0) {
-        cl_auto_ptr<char> pch(new char[16 + strlen(prefix)]);
+        std::size_t size = 16 + strlen(prefix);
+        cl_auto_ptr<char> pch(new char[size]);
         iVariableNumber++;
 #ifdef CL_FIND_LEAK
         ++cAbstractVariables;
 #endif
-        sprintf(pch.get(), "%s%ld", prefix, varnumber);
-        _name = string(pch.get());
+        sprintf_s(pch.get(), size, "%s%ld", prefix, varnumber);
+        _name = std::string(pch.get());
     }
 
     virtual ~ClAbstractVariable()
@@ -65,10 +66,10 @@ class ClAbstractVariable {
 #endif
 
     // Return the Name of the variable
-    string Name() const { return _name; }
+    std::string Name() const { return _name; }
 
     // Set the Name of the variable
-    virtual void SetName(string const &Name) { _name = Name; }
+    virtual void SetName(std::string const &Name) { _name = Name; }
 
     // Return true iff this variable is a ClFloatVariable
     virtual bool IsFloatVariable() const { return false; }
@@ -109,9 +110,10 @@ class ClAbstractVariable {
     //	  x[10.0]		-- w/ Name
     //	  x[0.0,100]		-- w/ Name, bounds but no Value yet
     //	  CV#345(10.0)		-- w/o Name
-    virtual ostream &PrintOn(ostream &xo) const = 0;
+    virtual std::ostream &PrintOn(std::ostream &xo) const = 0;
 
-    friend ostream &operator<<(ostream &xos, const ClAbstractVariable &clv) {
+    friend std::ostream &operator<<(std::ostream &xos,
+                                    const ClAbstractVariable &clv) {
         clv.PrintOn(xos);
         return xos;
     }
@@ -145,7 +147,7 @@ class ClAbstractVariable {
     void *Pv() const { return _pv; }
 
   private:
-    string _name;
+    std::string _name;
 
     static long iVariableNumber;
 

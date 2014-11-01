@@ -29,13 +29,13 @@ class ClObjectiveVariable : public ClAbstractVariable {
     friend class ClTableau;
     friend class ClSimplexSolver;
 
-    ClObjectiveVariable(string name = "") : ClAbstractVariable(name) {}
+    ClObjectiveVariable(std::string name = "") : ClAbstractVariable(name) {}
 
     ClObjectiveVariable(long number, char *prefix)
         : ClAbstractVariable(number, prefix) {}
 
 #ifndef CL_NO_IO
-    virtual ostream &PrintOn(ostream &xo) const {
+    virtual std::ostream &PrintOn(std::ostream &xo) const {
         xo << "[" << Name() << ":obj]";
         return xo;
     }

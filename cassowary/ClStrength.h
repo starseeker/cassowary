@@ -34,11 +34,11 @@ class ClStrength : public gc {
 class ClStrength {
 #endif
   public:
-    ClStrength(const string &Name, const ClSymbolicWeight &symbolicWeight)
+    ClStrength(const std::string &Name, const ClSymbolicWeight &symbolicWeight)
         : _name(Name), _symbolicWeight(symbolicWeight) {}
 
     // special case for when nLevels = 3, should assert nLevels() == 3
-    ClStrength(const string &Name, double w1, double w2, double w3);
+    ClStrength(const std::string &Name, double w1, double w2, double w3);
 
     virtual ~ClStrength() {}
 
@@ -47,14 +47,14 @@ class ClStrength {
     }
 
 #ifndef CL_NO_IO
-    virtual ostream &PrintOn(ostream &xo) const {
+    virtual std::ostream &PrintOn(std::ostream &xo) const {
         xo << Name();
         if (!IsRequired())
             xo << ":" << symbolicWeight();
         return xo;
     }
 
-    friend ostream &operator<<(ostream &xos, const ClStrength &Cls) {
+    friend std::ostream &operator<<(std::ostream &xos, const ClStrength &Cls) {
         Cls.PrintOn(xos);
         return xos;
     }
@@ -70,16 +70,16 @@ class ClStrength {
     void *Pv() const { return _pv; }
 
   private:
-    string Name() const { return _name; }
+    std::string Name() const { return _name; }
 
-    void SetName(string Name) { _name = Name; }
+    void SetName(std::string Name) { _name = Name; }
 
     void SetSymbolicWeight(const ClSymbolicWeight &symbolicWeight) {
         _symbolicWeight = symbolicWeight;
     }
 
     // instance variables
-    string _name;
+    std::string _name;
     ClSymbolicWeight _symbolicWeight;
 
     void *_pv;

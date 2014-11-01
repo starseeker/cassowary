@@ -56,18 +56,18 @@ class ClFDSolver : public ClSolver {
     }
 
 #ifndef CL_NO_IO
-    ostream &PrintOn(ostream &xo) const;
+    std::ostream &PrintOn(std::ostream &xo) const;
 
-    ostream &PrintInternalInfo(ostream &xo) const;
+    std::ostream &PrintInternalInfo(std::ostream &xo) const;
 
-    ostream &PrintOnVerbose(ostream &xo) const {
+    std::ostream &PrintOnVerbose(std::ostream &xo) const {
         PrintOn(xo);
         PrintInternalInfo(xo);
         xo << endl;
         return xo;
     }
 
-    friend ostream &operator<<(ostream &xo, const ClFDSolver &solver);
+    friend std::ostream &operator<<(std::ostream &xo, const ClFDSolver &solver);
 
 #endif
 

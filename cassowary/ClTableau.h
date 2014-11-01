@@ -26,15 +26,15 @@
 #ifndef CL_NO_IO
 class ClTableau;
 
-ostream &operator<<(ostream &xo, const ClTableau &clt);
+std::ostream &operator<<(std::ostream &xo, const ClTableau &clt);
 
-ostream &operator<<(ostream &xo, const ClVarSet &varset);
+std::ostream &operator<<(std::ostream &xo, const ClVarSet &varset);
 
-ostream &operator<<(ostream &xo, const ClTableauColumnsMap &varmap);
+std::ostream &operator<<(std::ostream &xo, const ClTableauColumnsMap &varmap);
 
-ostream &operator<<(ostream &xo, const ClTableauRowsMap &rows);
+std::ostream &operator<<(std::ostream &xo, const ClTableauRowsMap &rows);
 
-ostream &operator<<(ostream &xo, const ClVarVector &varlist);
+std::ostream &operator<<(std::ostream &xo, const ClVarVector &varlist);
 #endif // CL_NO_IO
 
 class ClTableau {
@@ -81,11 +81,11 @@ class ClTableau {
     }
 
 #ifndef CL_NO_IO
-    ostream &PrintOn(ostream &xo) const;
+    std::ostream &PrintOn(std::ostream &xo) const;
 
-    ostream &PrintInternalInfo(ostream &xo) const;
+    std::ostream &PrintInternalInfo(std::ostream &xo) const;
 
-    ostream &printExternalVariablesTo(ostream &xo) const;
+    std::ostream &printExternalVariablesTo(std::ostream &xo) const;
 
 #endif
 
@@ -103,8 +103,8 @@ class ClTableau {
             if (clv.IsExternal()) {
                 if (_externalRows.find(clv) == _externalRows.end()) {
 #ifndef CL_NO_IO
-                    cerr << "External basic variable " << clv
-                         << " is not in _externalRows" << endl;
+                    std::cerr << "External basic variable " << clv
+                              << " is not in _externalRows" << std::endl;
 #endif
                 }
             }
@@ -117,8 +117,9 @@ class ClTableau {
                     if (_externalParametricVars.find(clv) ==
                         _externalParametricVars.end()) {
 #ifndef CL_NO_IO
-                        cerr << "External parametric variable " << clv
-                             << " is not in _externalParametricVars" << endl;
+                        std::cerr << "External parametric variable " << clv
+                                  << " is not in _externalParametricVars"
+                                  << std::endl;
 #endif
                     }
                 }

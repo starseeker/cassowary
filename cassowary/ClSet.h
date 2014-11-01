@@ -21,10 +21,10 @@
 
 #ifdef CL_USE_HASH_MAP_AND_SET
 #include <hash_set>
-#define ClSet hash_set
+#define ClSet std::hash_set // FIXME: std::unordered_set
 #else
 #include <set>
-#define ClSet set
+#define ClSet std::set
 #endif
 
 #endif

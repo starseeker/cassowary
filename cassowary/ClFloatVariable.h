@@ -28,7 +28,7 @@ class ClFloatVariable : public ClAbstractVariable {
   public:
     typedef ClAbstractVariable super;
 
-    ClFloatVariable(string name, Number Value = 0.0)
+    ClFloatVariable(std::string name, Number Value = 0.0)
         : ClAbstractVariable(name), _value(Value) {}
 
     ClFloatVariable(Number Value = 0.0)
@@ -62,7 +62,7 @@ class ClFloatVariable : public ClAbstractVariable {
     // object.
     //	EXAMPLE
     //	  [x:10.0]		-- name = "x", Value = 10.0
-    virtual ostream &PrintOn(ostream &xo) const;
+    virtual std::ostream &PrintOn(std::ostream &xo) const;
 #endif
 
     // Return the current Value I hold.

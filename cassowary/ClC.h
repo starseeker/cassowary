@@ -30,27 +30,27 @@ extern "C" {
 
 typedef double Number;
 
-struct ClVariable;
+class ClVariable;
 
-typedef struct ClVariable *CL_Variable;
+typedef class ClVariable *CL_Variable;
 
 typedef CL_Variable CLV; /* synonym, for brevity */
 
-struct ClSolver;
-typedef struct ClSolver *CL_Solver;
+class ClSolver;
+typedef class ClSolver *CL_Solver;
 
-struct ClSimplexSolver;
-typedef struct ClSimplexSolver *CL_SimplexSolver;
+class ClSimplexSolver;
+typedef class ClSimplexSolver *CL_SimplexSolver;
 
-struct ClTableau;
-typedef struct ClSimplexSolver *CL_Tableau; // ClSimplexSolver * on purpose
+class ClTableau;
+typedef class ClSimplexSolver *CL_Tableau; // ClSimplexSolver * on purpose
 
-struct ClConstraint;
-typedef struct ClConstraint *CL_Constraint;
+class ClConstraint;
+typedef class ClConstraint *CL_Constraint;
 
 #ifndef CLC_IMPL
-struct StringToVarMap;
-typedef struct StringToVarMap *CL_VarMap;
+class StringToVarMap;
+typedef class StringToVarMap *CL_VarMap;
 
 CL_VarMap CL_SetVarMap(CL_VarMap varmap_);
 

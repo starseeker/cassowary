@@ -51,7 +51,7 @@ class ClFDBinaryOneWayConstraint : public ClFDConstraint {
     static bool FCanConvertCn(const ClConstraint &cn);
 
 #ifndef CL_NO_IO
-    virtual ostream &PrintOn(ostream &xo) const {
+    virtual std::ostream &PrintOn(std::ostream &xo) const {
         xo << "FDCn: " << _vRW << " " << StrCnRelation(_rel) << " ";
         if (_coefficient != 0) {
             if (_coefficient != 1)
@@ -64,8 +64,9 @@ class ClFDBinaryOneWayConstraint : public ClFDConstraint {
         return xo;
     }
 
-    friend ostream &operator<<(ostream &xos,
-                               const ClFDBinaryOneWayConstraint &constraint) {
+    friend std::ostream &
+    operator<<(std::ostream &xos,
+               const ClFDBinaryOneWayConstraint &constraint) {
         return constraint.PrintOn(xos);
     }
 

@@ -14,6 +14,8 @@
 #define CONFIG_H_INCLUDED
 #endif
 
+#if defined(CL_HAVE_GTL) && defined(CL_BUILD_FD_SOLVER)
+
 #include "Cassowary.h"
 #include "ClFDSolver.h"
 #include "ClFDBinaryOneWayConstraint.h"
@@ -308,16 +310,16 @@ void ClFDSolver::ResetSetFlagsOnVariables() {
     }
 }
 
-ostream &ClFDSolver::PrintOn(ostream &xo) const {
+ostream &ClFDSolver::PrintOn(std::ostream &xo) const {
     xo << "FDSolver: " << _setCns
        << "Graph nodes, edges = " << G.number_of_nodes() << ", "
        << G.number_of_edges() << endl;
     return xo;
 }
 
-ostream &ClFDSolver::PrintInternalInfo(ostream &xo) const { return xo; }
+ostream &ClFDSolver::PrintInternalInfo(std::ostream &xo) const { return xo; }
 
-ostream &operator<<(ostream &xo, const ClFDSolver &clfds) {
+ostream &operator<<(std::ostream &xo, const ClFDSolver &clfds) {
     return clfds.PrintOn(xo);
 }
 
@@ -346,3 +348,5 @@ void ListPushOnto(list<FDNumber> *pl, ...) {
     }
     va_end(ap);
 }
+
+#endif

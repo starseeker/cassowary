@@ -42,7 +42,7 @@ inline enum ClCnRelation ReverseInequality(enum ClCnRelation c) {
     return c;
 }
 
-inline string StrCnRelation(ClCnRelation rel) {
+inline std::string StrCnRelation(ClCnRelation rel) {
     switch (rel) {
     case cnEQ:
         return "=";
@@ -58,6 +58,7 @@ inline string StrCnRelation(ClCnRelation rel) {
         return ">";
     default:
         assert(false);
+        return "";
     }
 }
 
@@ -103,9 +104,10 @@ class ClConstraint {
     virtual double weight() const { return _weight; }
 
 #ifndef CL_NO_IO
-    virtual ostream &PrintOn(ostream &xo) const = 0;
+    virtual std::ostream &PrintOn(std::ostream &xo) const = 0;
 
-    friend ostream &operator<<(ostream &xos, const ClConstraint &constraint) {
+    friend std::ostream &operator<<(std::ostream &xos,
+                                    const ClConstraint &constraint) {
         constraint.PrintOn(xos);
         return xos;
     }

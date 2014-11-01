@@ -30,7 +30,7 @@ class ClFDVariable : public ClAbstractVariable {
     typedef ClAbstractVariable super;
 
 #if 0 /* GJB:FIXME:: */
-  ClFDVariable(string name, FDNumber Value) :
+  ClFDVariable(std::string name, FDNumber Value) :
     ClAbstractVariable(name),
     _value(Value),
     _fSet(true),
@@ -39,10 +39,11 @@ class ClFDVariable : public ClAbstractVariable {
     { }
 #endif
 
-    ClFDVariable(string name, FDNumber Value,
-                 const list<FDNumber> &initial_domain)
+    ClFDVariable(std::string name, FDNumber Value,
+                 const std::list<FDNumber> &initial_domain)
         : ClAbstractVariable(name), _value(Value), _fSet(true),
-          _desired_value(Value), _plfdnInitialDomain(new list<FDNumber>()) {
+          _desired_value(Value),
+          _plfdnInitialDomain(new std::list<FDNumber>()) {
         *_plfdnInitialDomain = initial_domain;
     }
 
@@ -58,7 +59,7 @@ class ClFDVariable : public ClAbstractVariable {
     // object.
     //	EXAMPLE
     //	  [x:10.0]		-- name = "x", Value = 10.0
-    virtual ostream &PrintOn(ostream &xo) const;
+    virtual std::ostream &PrintOn(std::ostream &xo) const;
 #endif
 
     // Return the current Value I hold.
@@ -83,7 +84,7 @@ class ClFDVariable : public ClAbstractVariable {
 
     virtual FDNumber DesiredValue() const { return _desired_value; }
 
-    virtual const list<FDNumber> *PlfdnDomain() const {
+    virtual const std::list<FDNumber> *PlfdnDomain() const {
         return _plfdnInitialDomain;
     }
 
@@ -107,7 +108,7 @@ class ClFDVariable : public ClAbstractVariable {
 
     FDNumber _desired_value;
 
-    list<FDNumber> *_plfdnInitialDomain;
+    std::list<FDNumber> *_plfdnInitialDomain;
 };
 
 #endif

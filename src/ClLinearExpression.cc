@@ -37,7 +37,7 @@ template <class T> ClGenericLinearExpression<T>::~ClGenericLinearExpression() {}
 
 #ifndef CL_NO_IO
 template <class T>
-ostream &ClGenericLinearExpression<T>::PrintOn(ostream &xo) const {
+std::ostream &ClGenericLinearExpression<T>::PrintOn(std::ostream &xo) const {
     typename ClVarToCoeffMap::const_iterator i = _terms.begin();
 
     if (!ClApprox(_constant, 0.0) || i == _terms.end()) {
@@ -279,10 +279,10 @@ void ClGenericLinearExpression<T>::SubstituteOut(
 #ifndef NDEBUG
     if (pv == _terms.end()) {
 #ifndef CL_NO_IO
-        cerr << "SubstituteOut: pv != _terms.end()" << endl;
-        cerr << "(" << var << ", " << expr << ", " << subject << ", "
-             << ")" << endl;
-        cerr << "*this == " << *this << endl;
+        std::cerr << "SubstituteOut: pv != _terms.end()" << std::endl;
+        std::cerr << "(" << var << ", " << expr << ", " << subject << ", "
+                  << ")" << std::endl;
+        std::cerr << "*this == " << *this << std::endl;
 #endif
         throw "SubstituteOut: pv != _terms.end()";
     }

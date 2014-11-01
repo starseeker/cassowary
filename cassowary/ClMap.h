@@ -21,10 +21,10 @@
 
 #ifdef CL_USE_HASH_MAP_AND_SET
 #include <hash_map>
-#define ClMap hash_map
+#define ClMap std::hash_map // FIXME: unordered_map
 #else
 #include <map>
-#define ClMap map
+#define ClMap std::map
 #endif
 
 #endif

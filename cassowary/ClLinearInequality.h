@@ -120,7 +120,7 @@ class ClLinearInequality : public ClLinearConstraint {
     virtual bool IsStrictInequality() const { return _fStrictInequality; }
 
 #ifndef CL_NO_IO
-    virtual ostream &PrintOn(ostream &xo) const {
+    virtual std::ostream &PrintOn(std::ostream &xo) const {
         super::PrintOn(xo);
         xo << " >= 0 )";
         return xo;

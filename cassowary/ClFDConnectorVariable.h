@@ -35,8 +35,8 @@ class ClFDConnectorVariable : public ClFDVariable {
   public:
     typedef ClFDVariable super;
 
-    ClFDConnectorVariable(string name, FDNumber Value,
-                          const list<FDNumber> &initial_domain,
+    ClFDConnectorVariable(std::string name, FDNumber Value,
+                          const std::list<FDNumber> &initial_domain,
                           ClSimplexSolver &solver, ClVariable clvFloat)
         : ClFDVariable(name, Value, initial_domain), _solver(solver),
           _clvFloat(clvFloat),
@@ -50,7 +50,7 @@ class ClFDConnectorVariable : public ClFDVariable {
     // object.
     //	EXAMPLE
     //	  [x:10.0]		-- name = "x", Value = 10.0
-    virtual ostream &PrintOn(ostream &xo) const;
+    virtual std::ostream &PrintOn(std::ostream &xo) const;
 #endif
 
     // permit overriding in subclasses in case something needs to be
@@ -60,7 +60,7 @@ class ClFDConnectorVariable : public ClFDVariable {
     virtual void ChangeValue(FDNumber Value) {
         if (_value != Value) {
             _value = Value;
-            cerr << "Updating " << _clvFloat << " now!" << endl;
+            std::cerr << "Updating " << _clvFloat << " now!" << std::endl;
             _solver.RemoveConstraint(_pcnRequiredLink);
             _pcnRequiredLink->ChangeConstant(_value);
             _solver.AddConstraint(_pcnRequiredLink);

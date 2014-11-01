@@ -27,7 +27,7 @@
 #include "ClFDVariable.h"
 
 class ClVariable;
-typedef map<const string, ClVariable> StringToVarMap;
+typedef std::map<const std::string, ClVariable> StringToVarMap;
 
 class ClVariable {
     ClAbstractVariable *pclv;
@@ -41,7 +41,7 @@ class ClVariable {
     ClVariable(const ClVariable &clv_) : pclv(clv_.pclv) {}
 
     /// These ctrs build ClFloatVariable-s
-    ClVariable(string name, Number Value = 0.0)
+    ClVariable(std::string name, Number Value = 0.0)
         : pclv(new ClFloatVariable(name, Value)) {
         if (pmapStrPclv) {
             (*pmapStrPclv)[name] = *this;
@@ -89,7 +89,7 @@ class ClVariable {
         return pclv->IsRestricted();
     }
 
-    string Name() const {
+    std::string Name() const {
         assert(pclv);
         return pclv->Name();
     }
@@ -119,7 +119,7 @@ class ClVariable {
         return pclv->Pv();
     }
 
-    void SetName(string const &nm) {
+    void SetName(std::string const &nm) {
         assert(pclv);
         if (pmapStrPclv) {
             pmapStrPclv->erase(Name());
@@ -136,7 +136,7 @@ class ClVariable {
         return 0;
     }
 
-    virtual list<FDNumber> *PlfdnDomain() {
+    virtual std::list<FDNumber> *PlfdnDomain() {
         assert(false);
         return NULL;
     }
@@ -145,7 +145,7 @@ class ClVariable {
     static StringToVarMap *VarMap() { return pmapStrPclv; }
     static StringToVarMap *pmapStrPclv;
 #ifndef CL_NO_IO
-    ostream &PrintOn(ostream &xo) const {
+    std::ostream &PrintOn(std::ostream &xo) const {
         if (pclv)
             return pclv->PrintOn(xo); /* return xo << "@" << pclv << endl; */
         return xo << "clvNil";
@@ -166,7 +166,7 @@ class ClVariable {
 };
 
 #ifndef CL_NO_IO
-inline ostream &operator<<(ostream &xo, const ClVariable &clv) {
+inline std::ostream &operator<<(std::ostream &xo, const ClVariable &clv) {
     return clv.PrintOn(xo);
 }
 #endif

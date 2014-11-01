@@ -37,7 +37,8 @@ CL_VarMap varmap = NULL;
 /* Functions unique to the C interface */
 void CL_Init() {}
 
-void CL_Shutdown() { /* empty */ }
+void CL_Shutdown() { /* empty */
+}
 
 CL_VarMap CL_VarMapNew() { return new StringToVarMap(); }
 
@@ -54,7 +55,7 @@ CL_VarMap CL_GetVarMap() { return varmap; }
 /* return true iff the variable did exist
    in the current global varmap, else return false */
 boolean CL_VarMapDelete(const char *sz) {
-    const string s(sz);
+    const std::string s(sz);
     StringToVarMap::iterator it = varmap->find(s);
     if (it != varmap->end()) {
         varmap->erase(it);
@@ -88,29 +89,29 @@ CL_SimplexSolver CL_SimplexSolverNew() {
 
 /* Print the ClVariable out to the given FILE * */
 void CL_ClvPrint(CLV var, FILE *out) {
-    stringstream xo;
-    xo << *var << ends;
+    std::stringstream xo;
+    xo << *var << std::ends;
     fprintf(out, "%s", xo.str().c_str());
 }
 
 /* Print the ClSolver object out to the given FILE * */
 void CL_SolverPrint(CL_Solver solver, FILE *out) {
-    stringstream xo;
-    xo << *solver << ends;
+    std::stringstream xo;
+    xo << *solver << std::ends;
     fprintf(out, "%s", xo.str().c_str());
 }
 
 /* Print the constraint object out to the given FILE * */
 void CL_ConstraintPrint(CL_Constraint pcn, FILE *out) {
-    stringstream xo;
-    xo << *pcn << ends;
+    std::stringstream xo;
+    xo << *pcn << std::ends;
     fprintf(out, "%s", xo.str().c_str());
 }
 
 void CL_TableauPrintExternalVariables(CL_Tableau tableau, FILE *out) {
-    stringstream xo;
+    std::stringstream xo;
     tableau->printExternalVariablesTo(xo);
-    xo << ends;
+    xo << std::ends;
     fprintf(out, "%s", xo.str().c_str());
 }
 
@@ -168,7 +169,7 @@ boolean CL_ClvIsNil(const CLV var) { return var->IsNil(); }
 CL_Constraint CL_ParseConstraint(const char *szConstraintRule,
                                  const char *szConstraintStrength) {
     try {
-        istringstream xiLine(szConstraintRule);
+        std::istringstream xiLine(szConstraintRule);
         ClConstraint *pcn =
             PcnParseConstraint(xiLine, ClVarLookupInMap(varmap, false),
                                ClsFromSz(szConstraintStrength));

@@ -43,7 +43,7 @@ class ClSimplexSolver : public ClSolver, public ClTableau {
 
   public:
     class ClEditInfo;
-    typedef list<ClEditInfo *> ClEditInfoList;
+    typedef std::list<ClEditInfo *> ClEditInfoList;
 
   protected:
     ClEditInfo *PEditInfoFromClv(ClVariable clv) {
@@ -175,8 +175,9 @@ class ClSimplexSolver : public ClSolver, public ClTableau {
     // increasing weights so that the solver will try to satisfy the x
     // and y stays on the same point, rather than the x stay on one and
     // the y stay on another.
-    ClSimplexSolver &AddPointStays(const vector<const ClPoint *> &listOfPoints,
-                                   const ClStrength &strength = ClsWeak());
+    ClSimplexSolver &
+    AddPointStays(const std::vector<const ClPoint *> &listOfPoints,
+                  const ClStrength &strength = ClsWeak());
 
     ClSimplexSolver &AddPointStay(const ClVariable vx, const ClVariable vy,
                                   const ClStrength &strength = ClsWeak(),
@@ -233,11 +234,11 @@ class ClSimplexSolver : public ClSolver, public ClTableau {
     // the constants of the edit variables.
     // This is implemented in terms of SuggestValue-s, and is
     // less efficient than that more natural interface
-    void Resolve(const vector<Number> &newEditConstants);
+    void Resolve(const std::vector<Number> &newEditConstants);
 
     // Convenience function for Resolve-s of two variables
     void Resolve(Number x, Number y) {
-        vector<Number> vals;
+        std::vector<Number> vals;
         vals.push_back(x);
         vals.push_back(y);
         Resolve(vals);
@@ -320,16 +321,17 @@ class ClSimplexSolver : public ClSolver, public ClTableau {
     void SetCnSatCallback(PfnCnSatCallback pfn) { _pfnCnSatCallback = pfn; }
 
 #ifndef CL_NO_IO
-    friend ostream &operator<<(ostream &xo, const ClSimplexSolver &tableau);
+    friend std::ostream &operator<<(std::ostream &xo,
+                                    const ClSimplexSolver &tableau);
 
-    ostream &PrintOn(ostream &xo) const;
+    std::ostream &PrintOn(std::ostream &xo) const;
 
-    ostream &PrintInternalInfo(ostream &xo) const;
+    std::ostream &PrintInternalInfo(std::ostream &xo) const;
 
-    ostream &PrintOnVerbose(ostream &xo) const {
+    std::ostream &PrintOnVerbose(std::ostream &xo) const {
         PrintOn(xo);
         PrintInternalInfo(xo);
-        xo << endl;
+        xo << std::endl;
         return xo;
     }
 
@@ -408,14 +410,15 @@ class ClSimplexSolver : public ClSolver, public ClTableau {
 
         ~ClEditInfo() {}
 
-        ostream &PrintOn(ostream &xo) const {
+        std::ostream &PrintOn(std::ostream &xo) const {
             xo << _clv << " -> [" << _clvEditPlus << ", " << _clvEditMinus
                << "](" << _prevEditConstant << ")@"
                << " -- " << *_pconstraint;
             return xo;
         }
 
-        friend ostream &operator<<(ostream &xo, const ClEditInfo &cei) {
+        friend std::ostream &operator<<(std::ostream &xo,
+                                        const ClEditInfo &cei) {
             return cei.PrintOn(xo);
         }
 
@@ -591,15 +594,15 @@ class ClSimplexSolver : public ClSolver, public ClTableau {
     // an EndEdit needs to pop off the top value,
     // then remove constraints to get down
     // to the # of constraints as in _stkCedcns.top()
-    stack<int> _stkCedcns;
+    std::stack<int> _stkCedcns;
 };
 
 #ifndef CL_NO_IO
 
-ostream &PrintTo(ostream &xo,
-                 const ClSimplexSolver::ClEditInfoList &listPEditInfo);
-ostream &operator<<(ostream &xo,
-                    const ClSimplexSolver::ClEditInfoList &listPEditInfo);
+std::ostream &PrintTo(std::ostream &xo,
+                      const ClSimplexSolver::ClEditInfoList &listPEditInfo);
+std::ostream &operator<<(std::ostream &xo,
+                         const ClSimplexSolver::ClEditInfoList &listPEditInfo);
 
 #endif
 

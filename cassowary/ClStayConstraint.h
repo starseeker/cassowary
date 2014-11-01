@@ -33,7 +33,7 @@ class ClStayConstraint : public ClEditOrStayConstraint {
     virtual bool isStayConstraint() const { return true; }
 
 #ifndef CL_NO_IO
-    virtual ostream &PrintOn(ostream &xo) const {
+    virtual std::ostream &PrintOn(std::ostream &xo) const {
         super::PrintOn(xo);
         return xo << " STAY)";
     }

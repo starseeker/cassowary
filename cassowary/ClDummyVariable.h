@@ -38,7 +38,7 @@ class ClDummyVariable : public ClAbstractVariable {
     friend class ClTableau;
     friend class ClSimplexSolver;
 
-    ClDummyVariable(string Name = "") : ClAbstractVariable(Name) {
+    ClDummyVariable(std::string Name = "") : ClAbstractVariable(Name) {
 #ifdef CL_FIND_LEAK
         ++cDummyVariables;
 #endif
@@ -52,7 +52,7 @@ class ClDummyVariable : public ClAbstractVariable {
     }
 
 #ifndef CL_NO_IO
-    virtual ostream &PrintOn(ostream &xo) const {
+    virtual std::ostream &PrintOn(std::ostream &xo) const {
         xo << "[" << Name() << ":dummy]";
         return xo;
     }

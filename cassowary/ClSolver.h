@@ -123,9 +123,9 @@ class ClSolver {
     bool FIsAutosolving() const { return _fAutosolve; }
 
 #ifndef CL_NO_IO
-    friend ostream &operator<<(ostream &xo, const ClSolver &solver);
+    friend std::ostream &operator<<(std::ostream &xo, const ClSolver &solver);
 
-    virtual ostream &PrintOn(ostream &xo) const = 0;
+    virtual std::ostream &PrintOn(std::ostream &xo) const = 0;
 
 #endif
 
@@ -140,17 +140,19 @@ class ClSolver {
 };
 
 #ifndef CL_NO_IO
-ostream &PrintTo(ostream &xo, const ClVarVector &varlist);
-ostream &operator<<(ostream &xo, const ClVarVector &varlist);
+std::ostream &PrintTo(std::ostream &xo, const ClVarVector &varlist);
+std::ostream &operator<<(std::ostream &xo, const ClVarVector &varlist);
 
-ostream &PrintTo(ostream &xo, const ClConstraintToVarSetMap &mapCnToVarSet);
-ostream &operator<<(ostream &xo, const ClConstraintToVarSetMap &mapCnToVarSet);
+std::ostream &PrintTo(std::ostream &xo,
+                      const ClConstraintToVarSetMap &mapCnToVarSet);
+std::ostream &operator<<(std::ostream &xo,
+                         const ClConstraintToVarSetMap &mapCnToVarSet);
 
-ostream &PrintTo(ostream &xo, const ClConstraintSet &setCn);
-ostream &operator<<(ostream &xo, const ClConstraintSet &setCn);
+std::ostream &PrintTo(std::ostream &xo, const ClConstraintSet &setCn);
+std::ostream &operator<<(std::ostream &xo, const ClConstraintSet &setCn);
 
-ostream &PrintTo(ostream &xo, const list<FDNumber> &listFDN);
-ostream &operator<<(ostream &xo, const list<FDNumber> &listFDN);
+std::ostream &PrintTo(std::ostream &xo, const std::list<FDNumber> &listFDN);
+std::ostream &operator<<(std::ostream &xo, const std::list<FDNumber> &listFDN);
 
 #endif
 

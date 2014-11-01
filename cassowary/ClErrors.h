@@ -25,14 +25,14 @@
 #include <stdexcept>
 
 #ifdef USE_GC
-class ExCLError : public exception, public gc {
+class ExCLError : public std::exception, public gc {
 #else
-class ExCLError : public exception {
+class ExCLError : public std::exception {
 #endif
 
   public:
     ExCLError() : _msg(NULL) {}
-    virtual string description() const {
+    virtual std::string description() const {
         return "(ExCLError) An error has occured in CL";
     }
 
@@ -47,7 +47,7 @@ class ExCLInternalError : public ExCLError {
     ExCLInternalError(const char *sz) { _msg = strdup(sz); }
     virtual ~ExCLInternalError() throw() {}
 
-    virtual string description() const {
+    virtual std::string description() const {
         if (_msg)
             return _msg;
         else
@@ -60,7 +60,7 @@ class ExCLBadResolve : public ExCLError {
     ExCLBadResolve(const char *sz) { _msg = strdup(sz); }
     virtual ~ExCLBadResolve() throw() {}
 
-    virtual string description() const {
+    virtual std::string description() const {
         if (_msg)
             return _msg;
         else
@@ -75,7 +75,7 @@ class ExCLEditMisuse : public ExCLError {
 
     virtual ~ExCLEditMisuse() throw() {}
 
-    virtual string description() const {
+    virtual std::string description() const {
         if (_msg)
             return _msg;
         return "(ExCLEditMisuse) Edit protocol usage violation";
@@ -86,7 +86,7 @@ class ExCLTooDifficult : public ExCLError {
   public:
     virtual ~ExCLTooDifficult() throw() {}
 
-    virtual string description() const {
+    virtual std::string description() const {
         return "(ExCLTooDifficult) The constraints are too difficult to solve";
     }
 };
@@ -97,7 +97,7 @@ class ExCLTooDifficultSpecial : public ExCLTooDifficult {
 
     virtual ~ExCLTooDifficultSpecial() throw() {}
 
-    virtual string description() const {
+    virtual std::string description() const {
         if (_msg)
             return _msg;
         else
@@ -110,7 +110,7 @@ class ExCLReadOnlyNotAllowed : public ExCLTooDifficult {
   public:
     virtual ~ExCLReadOnlyNotAllowed() throw() {}
 
-    virtual string description() const {
+    virtual std::string description() const {
         return "(ExCLReadOnlyNotAllowed) The read-only annotation is not "
                "permitted by the solver";
     }
@@ -119,7 +119,7 @@ class ExCLReadOnlyNotAllowed : public ExCLTooDifficult {
 class ExCLCycleNotAllowed : public ExCLTooDifficult {
   public:
     virtual ~ExCLCycleNotAllowed() throw() {}
-    virtual string description() const {
+    virtual std::string description() const {
         return "(ExCLCycleNotAllowed) A cyclic constraint graph is not "
                "permitted by the solver";
     }
@@ -129,7 +129,7 @@ class ExCLStrictInequalityNotAllowed : public ExCLTooDifficult {
   public:
     virtual ~ExCLStrictInequalityNotAllowed() throw() {}
 
-    virtual string description() const {
+    virtual std::string description() const {
         return "(ExCLStrictInequalityNotAllowed) The strict inequality is not "
                "permitted by the solver";
     }
@@ -138,7 +138,7 @@ class ExCLStrictInequalityNotAllowed : public ExCLTooDifficult {
 class ExCLRequiredFailure : public ExCLError {
   public:
     virtual ~ExCLRequiredFailure() throw() {}
-    virtual string description() const {
+    virtual std::string description() const {
         return "(ExCLRequiredFailure) A required constraint cannot be "
                "satisfied";
     }
@@ -147,7 +147,7 @@ class ExCLRequiredFailure : public ExCLError {
 class ExCLNotEnoughStays : public ExCLError {
   public:
     virtual ~ExCLNotEnoughStays() throw() {}
-    virtual string description() const {
+    virtual std::string description() const {
         return "(ExCLNotEnoughStays) There are not enough stays to give "
                "specific values to every variable";
     }
@@ -156,7 +156,7 @@ class ExCLNotEnoughStays : public ExCLError {
 class ExCLNonlinearExpression : public ExCLError {
   public:
     virtual ~ExCLNonlinearExpression() throw() {}
-    virtual string description() const {
+    virtual std::string description() const {
         return "(ExCLNonlinearExpression) The resulting expression would be "
                "nonlinear";
     }
@@ -165,7 +165,7 @@ class ExCLNonlinearExpression : public ExCLError {
 class ExCLConstraintNotFound : public ExCLError {
   public:
     virtual ~ExCLConstraintNotFound() throw() {}
-    virtual string description() const {
+    virtual std::string description() const {
         return "(ExCLConstraintNotFound) Tried to remove a constraint that was "
                "never added";
     }
@@ -174,39 +174,39 @@ class ExCLConstraintNotFound : public ExCLError {
 class ExCLParseError : public ExCLError {
   public:
     virtual ~ExCLParseError() throw() {}
-    virtual string description() const { return "(ExCLParseError)"; }
+    virtual std::string description() const { return "(ExCLParseError)"; }
 };
 
 class ExCLParseErrorMisc : public ExCLParseError {
   public:
-    ExCLParseErrorMisc(const string &s) : _msg("(ExCLParseError) ") {
+    ExCLParseErrorMisc(const std::string &s) : _msg("(ExCLParseError) ") {
         _msg += s;
     }
     virtual ~ExCLParseErrorMisc() throw() {}
-    virtual string description() const { return _msg; }
+    virtual std::string description() const { return _msg; }
 
   private:
-    string _msg;
+    std::string _msg;
 };
 
 class ExCLParseErrorBadIdentifier : public ExCLParseError {
   public:
-    ExCLParseErrorBadIdentifier(const string &id)
+    ExCLParseErrorBadIdentifier(const std::string &id)
         : _msg("(ExCLParseErrorBadIdentifier) Did not recognize identifier '") {
         _msg += id;
         _msg += "'";
     }
     virtual ~ExCLParseErrorBadIdentifier() throw() {}
-    virtual string description() const { return _msg; }
+    virtual std::string description() const { return _msg; }
 
   private:
-    string _msg;
+    std::string _msg;
 };
 
 class ExCLRequiredFailureWithExplanation : public ExCLRequiredFailure {
   public:
     virtual ~ExCLRequiredFailureWithExplanation() throw() {}
-    virtual string description() const {
+    virtual std::string description() const {
         return "(ExCLRequiredFailureWithExplanation) A required constraint "
                "cannot be satisfied";
     }

@@ -32,7 +32,7 @@ ClTableau::~ClTableau() {
 
 #ifndef CL_NO_IO
 // Some extra debugging info
-ostream &ClTableau::PrintInternalInfo(ostream &xo) const {
+std::ostream &ClTableau::PrintInternalInfo(std::ostream &xo) const {
     xo << "ncns:" << _rows.size() - 1 << "; cols:" << _columns.size()
        << "; infrows:" << _infeasibleRows.size()
        << "; ebvars:" << _externalRows.size()
@@ -40,7 +40,7 @@ ostream &ClTableau::PrintInternalInfo(ostream &xo) const {
     return xo;
 }
 
-ostream &ClTableau::printExternalVariablesTo(ostream &xo) const {
+std::ostream &ClTableau::printExternalVariablesTo(std::ostream &xo) const {
     xo << "Parametric: ";
     ClVarSet::const_iterator itParVars = _externalParametricVars.begin();
     for (; itParVars != _externalParametricVars.end(); ++itParVars) {
@@ -53,7 +53,7 @@ ostream &ClTableau::printExternalVariablesTo(ostream &xo) const {
         ClVariable v = *itRowVars;
         xo << v << " ";
     }
-    return xo << endl;
+    return xo << std::endl;
 }
 
 #endif
@@ -192,7 +192,7 @@ void ClTableau::SubstituteOut(ClVariable oldVar,
 
 #ifndef CL_NO_IO
 
-ostream &PrintTo(ostream &xo, const ClVarSet &varset) {
+std::ostream &PrintTo(std::ostream &xo, const ClVarSet &varset) {
     ClVarSet::const_iterator it = varset.begin();
     xo << "{ ";
     if (it != varset.end()) {
@@ -206,23 +206,23 @@ ostream &PrintTo(ostream &xo, const ClVarSet &varset) {
     return xo;
 }
 
-ostream &operator<<(ostream &xo, const ClVarSet &varset) {
+std::ostream &operator<<(std::ostream &xo, const ClVarSet &varset) {
     return PrintTo(xo, varset);
 }
 
-ostream &PrintTo(ostream &xo, const ClTableauColumnsMap &varmap) {
+std::ostream &PrintTo(std::ostream &xo, const ClTableauColumnsMap &varmap) {
     ClTableauColumnsMap::const_iterator it = varmap.begin();
     for (; it != varmap.end(); ++it) {
-        xo << (*it).first << " -> " << (*it).second << endl;
+        xo << (*it).first << " -> " << (*it).second << std::endl;
     }
     return xo;
 }
 
-ostream &operator<<(ostream &xo, const ClTableauColumnsMap &varmap) {
+std::ostream &operator<<(std::ostream &xo, const ClTableauColumnsMap &varmap) {
     return PrintTo(xo, varmap);
 }
 
-ostream &PrintTo(ostream &xo, const ClTableauRowsMap &rows) {
+std::ostream &PrintTo(std::ostream &xo, const ClTableauRowsMap &rows) {
     ClTableauRowsMap::const_iterator it = rows.begin();
     for (; it != rows.end(); ++it) {
         ClVariable v = it->first;
@@ -232,25 +232,26 @@ ostream &PrintTo(ostream &xo, const ClTableauRowsMap &rows) {
             xo << *pe;
         else
             xo << "NilExpr";
-        xo << endl;
+        xo << std::endl;
     }
     return xo;
 }
 
-ostream &operator<<(ostream &xo, const ClTableauRowsMap &rows) {
+std::ostream &operator<<(std::ostream &xo, const ClTableauRowsMap &rows) {
     return PrintTo(xo, rows);
 }
 
-ostream &ClTableau::PrintOn(ostream &xo) const {
-    xo << "Tableau:\n" << _rows << endl;
-    xo << "Columns:\n" << _columns << endl;
-    xo << "Infeasible rows: " << _infeasibleRows << endl;
-    xo << "External basic variables: " << _externalRows << endl;
-    xo << "External parametric variables: " << _externalParametricVars << endl;
+std::ostream &ClTableau::PrintOn(std::ostream &xo) const {
+    xo << "Tableau:\n" << _rows << std::endl;
+    xo << "Columns:\n" << _columns << std::endl;
+    xo << "Infeasible rows: " << _infeasibleRows << std::endl;
+    xo << "External basic variables: " << _externalRows << std::endl;
+    xo << "External parametric variables: " << _externalParametricVars
+       << std::endl;
     return xo;
 }
 
-ostream &operator<<(ostream &xo, const ClTableau &clt) {
+std::ostream &operator<<(std::ostream &xo, const ClTableau &clt) {
     return clt.PrintOn(xo);
 }
 

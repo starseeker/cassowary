@@ -39,8 +39,9 @@
 #pragma warning(disable : 4786)
 #pragma warning(disable : 4101)
 #pragma warning(disable : 4267)
-using namespace std;
 #define strdup _strdup
+#define strncasecmp _strnicmp
+#define strcasecmp _stricmp
 #else
 #ifndef CL_NO_IO
 #include <iostream>

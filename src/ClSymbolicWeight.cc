@@ -32,7 +32,7 @@ ClSymbolicWeight::ClSymbolicWeight(double w1, double w2, double w3) {
     assert(_values.size() == 3);
 }
 
-ClSymbolicWeight::ClSymbolicWeight(const vector<double> &weights)
+ClSymbolicWeight::ClSymbolicWeight(const std::vector<double> &weights)
     : _values(weights) {}
 
 ClSymbolicWeight &ClSymbolicWeight::Zero() {
@@ -41,7 +41,7 @@ ClSymbolicWeight &ClSymbolicWeight::Zero() {
 }
 
 ClSymbolicWeight &ClSymbolicWeight::negated() {
-    vector<double>::iterator it = _values.begin();
+    std::vector<double>::iterator it = _values.begin();
     for (; it != _values.end(); ++it) {
         *it = -*it;
     }
@@ -49,7 +49,7 @@ ClSymbolicWeight &ClSymbolicWeight::negated() {
 }
 
 ClSymbolicWeight &ClSymbolicWeight::MultiplyMe(Number n) {
-    vector<double>::iterator it = _values.begin();
+    std::vector<double>::iterator it = _values.begin();
     for (; it != _values.end(); ++it) {
         *it *= n;
     }
@@ -59,7 +59,7 @@ ClSymbolicWeight &ClSymbolicWeight::MultiplyMe(Number n) {
 ClSymbolicWeight ClSymbolicWeight::DivideBy(Number n) const {
     assert(n != 0);
     ClSymbolicWeight clsw(0);
-    vector<double>::const_iterator i = _values.begin();
+    std::vector<double>::const_iterator i = _values.begin();
     for (; i != _values.end(); ++i) {
         clsw.push_back(*i / n);
     }
@@ -69,8 +69,8 @@ ClSymbolicWeight ClSymbolicWeight::DivideBy(Number n) const {
 ClSymbolicWeight &ClSymbolicWeight::addtoMe(const ClSymbolicWeight &cl) {
     assert(cl.CLevels() == CLevels());
 
-    vector<double>::iterator i1 = _values.begin();
-    vector<double>::const_iterator i2 = cl._values.begin();
+    std::vector<double>::iterator i1 = _values.begin();
+    std::vector<double>::const_iterator i2 = cl._values.begin();
     for (; i1 != _values.end(); ++i1, ++i2) {
         *i1 += *i2;
     }
@@ -81,8 +81,8 @@ ClSymbolicWeight ClSymbolicWeight::Subtract(const ClSymbolicWeight &cl) const {
     assert(cl.CLevels() == CLevels());
 
     ClSymbolicWeight clsw(0);
-    vector<double>::const_iterator i1 = _values.begin();
-    vector<double>::const_iterator i2 = cl._values.begin();
+    std::vector<double>::const_iterator i1 = _values.begin();
+    std::vector<double>::const_iterator i2 = cl._values.begin();
     for (; i1 != _values.end(); ++i1, ++i2) {
         clsw.push_back(*i1 - *i2);
     }

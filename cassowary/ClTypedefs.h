@@ -28,8 +28,6 @@ class ClVariable;
 class ClConstraint;
 class ClEditInfo;
 
-using namespace std;
-
 // For Tableau
 // ClTableauVarSet is not a ClSet, for performance reasons
 // (Steve Wolfman discovered this, and seems to be true --02/17/99 gjb)
@@ -43,7 +41,7 @@ typedef ClMap<ClVariable, ClLinearExpression *> ClTableauRowsMap;
 typedef ClMap<const ClConstraint *, ClVarSet> ClConstraintToVarSetMap;
 typedef ClMap<const ClConstraint *, ClVariable> ClConstraintToVarMap;
 typedef ClMap<ClVariable, const ClConstraint *> ClVarToConstraintMap;
-typedef vector<ClVariable> ClVarVector;
+typedef std::vector<ClVariable> ClVarVector;
 
 typedef ClSet<const ClConstraint *> ClConstraintSet;
 

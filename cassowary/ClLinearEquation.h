@@ -64,7 +64,7 @@ class ClLinearEquation : public ClLinearConstraint {
     }
 
 #ifndef CL_NO_IO
-    virtual ostream &PrintOn(ostream &xo) const {
+    virtual std::ostream &PrintOn(std::ostream &xo) const {
         super::PrintOn(xo);
         xo << " = 0 )";
         return xo;

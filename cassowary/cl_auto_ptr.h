@@ -7,11 +7,11 @@
 
 #ifdef _MSC_VER
 #include <memory>
-template <class T> void ReinitializeAutoPtr(auto_ptr<T> &apref, T *pt) {
-    auto_ptr<T> ap(pt);
+template <class T> void ReinitializeAutoPtr(std::auto_ptr<T> &apref, T *pt) {
+    std::auto_ptr<T> ap(pt);
     apref = ap;
 }
-#define cl_auto_ptr auto_ptr
+#define cl_auto_ptr std::auto_ptr
 #else
 // FIXGJB: This implementation for egcs is buggy -- be careful
 // and replace ASAP

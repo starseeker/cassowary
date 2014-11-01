@@ -36,7 +36,7 @@ class ClSlackVariable : public ClAbstractVariable {
     friend class ClTableau;
     friend class ClSimplexSolver;
 
-    ClSlackVariable(string Name = "") : ClAbstractVariable(Name) {
+    ClSlackVariable(std::string Name = "") : ClAbstractVariable(Name) {
 #ifdef CL_FIND_LEAK
         ++cSlackVariables;
 #endif
@@ -50,7 +50,7 @@ class ClSlackVariable : public ClAbstractVariable {
     }
 
 #ifndef CL_NO_IO
-    virtual ostream &PrintOn(ostream &xo) const {
+    virtual std::ostream &PrintOn(std::ostream &xo) const {
         xo << "[" << Name() << ":slack]";
         return xo;
     }

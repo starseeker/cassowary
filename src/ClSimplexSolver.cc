@@ -153,13 +153,13 @@ ClSimplexSolver &ClSimplexSolver::AddConstraint(ClConstraint *const pcn) throw(
 // and y stays on the same point, rather than the x stay on one and
 // the y stay on another.
 ClSimplexSolver &
-ClSimplexSolver::AddPointStays(const vector<const ClPoint *> &listOfPoints,
+ClSimplexSolver::AddPointStays(const std::vector<const ClPoint *> &listOfPoints,
                                const ClStrength &strength) {
 #ifdef CL_TRACE
     Tracer TRACER(__FUNCTION__);
 #endif
 
-    vector<const ClPoint *>::const_iterator it = listOfPoints.begin();
+    std::vector<const ClPoint *>::const_iterator it = listOfPoints.begin();
     double weight = 1.0;
     static const double multiplier = 2.0;
     for (; it != listOfPoints.end(); ++it) {
@@ -177,7 +177,7 @@ ClSimplexSolver &ClSimplexSolver::AddPointStay(const ClPoint &clp,
 }
 
 ClSimplexSolver &ClSimplexSolver::RemoveEditVarsTo(int n) {
-    queue<ClVariable> qclv;
+    std::queue<ClVariable> qclv;
     ClVarSet
         sclvStillEditing; // Set of edit variables that we need to *not* remove
 #ifdef DEBUG_NESTED_EDITS
@@ -230,7 +230,7 @@ ClSimplexSolver &ClSimplexSolver::RemoveEditVarsTo(int n) {
 }
 
 /* A predicate used for remove_if */
-class VarInVarSet : public unary_function<ClVariable, bool> {
+class VarInVarSet : public std::unary_function<ClVariable, bool> {
   public:
     VarInVarSet(ClVarSet &clvset) : _set(clvset), _setEnd(clvset.end()) {}
 
@@ -499,9 +499,9 @@ ClSimplexSolver &ClSimplexSolver::SuggestValue(ClVariable v,
     ClEditInfo *pcei = PEditInfoFromClv(v);
     if (NULL == pcei) {
 #ifndef CL_NO_IO
-        stringstream ss;
+        std::stringstream ss;
         ss << "SuggestValue for variable " << v
-           << ", but var is not an edit variable" << ends;
+           << ", but var is not an edit variable" << std::ends;
         throw ExCLEditMisuse(ss.str().c_str());
 #else
         throw ExCLEditMisuse(v.Name().c_str());
@@ -522,7 +522,7 @@ ClSimplexSolver &ClSimplexSolver::SuggestValue(ClVariable v,
 // from the middle of the edit constraints you added
 // (e.g., edit A, edit B, edit C, remove B -> this will fail!)
 // DEPRECATED
-void ClSimplexSolver::Resolve(const vector<Number> &newEditConstants) {
+void ClSimplexSolver::Resolve(const std::vector<Number> &newEditConstants) {
     ClEditInfoList::iterator it = _editInfoList.begin();
     int i = 0;
     for (; i < newEditConstants.size() && it != _editInfoList.end();
@@ -923,8 +923,8 @@ void ClSimplexSolver::DualOptimize() {
                     }
                 }
                 if (ratio == DBL_MAX) {
-                    stringstream ss;
-                    ss << "ratio == nil (DBL_MAX)" << ends;
+                    std::stringstream ss;
+                    ss << "ratio == nil (DBL_MAX)" << std::ends;
                     throw ExCLInternalError(ss.str().c_str());
                 }
                 Pivot(entryVar, exitVar);
@@ -1170,8 +1170,8 @@ void ClSimplexSolver::Optimize(ClVariable zVar) {
         // arbitrarily negative.  This should never happen in this
         // application.
         if (minRatio == DBL_MAX) {
-            stringstream ss;
-            ss << "objective function is unbounded!" << ends;
+            std::stringstream ss;
+            ss << "objective function is unbounded!" << std::ends;
             throw ExCLInternalError(ss.str().c_str());
         }
         Pivot(entryVar, exitVar);
@@ -1278,9 +1278,9 @@ void ClSimplexSolver::SetExternalVariables() {
         if (FIsBasicVar(v)) {
 #ifndef CL_NO_IO
             // WARNING
-            cerr << __FUNCTION__ << "Error: variable " << v
-                 << " in _externalParametricVars is basic" << endl;
-            cerr << "Row is: " << *RowExpression(v) << endl;
+            std::cerr << __FUNCTION__ << "Error: variable " << v
+                      << " in _externalParametricVars is basic" << std::endl;
+            std::cerr << "Row is: " << *RowExpression(v) << std::endl;
 #endif
             continue;
         }
@@ -1302,7 +1302,7 @@ void ClSimplexSolver::SetExternalVariables() {
 }
 
 #ifndef CL_NO_IO
-ostream &PrintTo(ostream &xo, const ClVarVector &varlist) {
+std::ostream &PrintTo(std::ostream &xo, const ClVarVector &varlist) {
     ClVarVector::const_iterator it = varlist.begin();
     xo << varlist.size() << ":"
        << "[ ";
@@ -1317,42 +1317,44 @@ ostream &PrintTo(ostream &xo, const ClVarVector &varlist) {
     return xo;
 }
 
-ostream &operator<<(ostream &xo, const ClVarVector &varlist) {
+std::ostream &operator<<(std::ostream &xo, const ClVarVector &varlist) {
     return PrintTo(xo, varlist);
 }
 
-ostream &PrintTo(ostream &xo, const ClConstraintToVarSetMap &mapCnToVarSet) {
+std::ostream &PrintTo(std::ostream &xo,
+                      const ClConstraintToVarSetMap &mapCnToVarSet) {
     ClConstraintToVarSetMap::const_iterator it = mapCnToVarSet.begin();
     for (; it != mapCnToVarSet.end(); ++it) {
         const ClConstraint *pcn = (*it).first;
         const ClVarSet &set = (*it).second;
-        xo << "CN: " << pcn << *pcn << ":: " << set << endl;
+        xo << "CN: " << pcn << *pcn << ":: " << set << std::endl;
     }
     return xo;
 }
 
-ostream &operator<<(ostream &xo, const ClConstraintToVarSetMap &mapCnToVarSet) {
+std::ostream &operator<<(std::ostream &xo,
+                         const ClConstraintToVarSetMap &mapCnToVarSet) {
     return PrintTo(xo, mapCnToVarSet);
 }
 
-ostream &ClSimplexSolver::PrintOn(ostream &xo) const {
+std::ostream &ClSimplexSolver::PrintOn(std::ostream &xo) const {
     super::PrintOn(xo);
 
-    xo << "_stayPlusErrorVars: " << _stayPlusErrorVars << endl;
-    xo << "_stayMinusErrorVars: " << _stayMinusErrorVars << endl;
-    xo << "_editInfoList:\n" << _editInfoList << endl;
+    xo << "_stayPlusErrorVars: " << _stayPlusErrorVars << std::endl;
+    xo << "_stayMinusErrorVars: " << _stayMinusErrorVars << std::endl;
+    xo << "_editInfoList:\n" << _editInfoList << std::endl;
     return xo;
 }
 
-ostream &ClSimplexSolver::PrintInternalInfo(ostream &xo) const {
+std::ostream &ClSimplexSolver::PrintInternalInfo(std::ostream &xo) const {
     super::PrintInternalInfo(xo);
     xo << "; edvars: " << _editInfoList.size();
-    xo << endl;
+    xo << std::endl;
     printExternalVariablesTo(xo);
     return xo;
 }
 
-ostream &operator<<(ostream &xo, const ClSimplexSolver &clss) {
+std::ostream &operator<<(std::ostream &xo, const ClSimplexSolver &clss) {
     return clss.PrintOn(xo);
 }
 
@@ -1380,9 +1382,10 @@ ClSimplexSolver::FIsConstraintSatisfied(const ClConstraint *const pcn) const
             if (pexpr != NULL && !ClApprox(pexpr->Constant(), 0.0)) {
 #ifndef CL_NO_IO
                 if (fCnsays)
-                    cerr << __FUNCTION__
-                         << ": constraint says satisfiable, but solver does not"
-                         << endl;
+                    std::cerr
+                        << __FUNCTION__
+                        << ": constraint says satisfiable, but solver does not"
+                        << std::endl;
 #endif
                 return false;
             }
@@ -1391,26 +1394,27 @@ ClSimplexSolver::FIsConstraintSatisfied(const ClConstraint *const pcn) const
 
 #ifndef CL_NO_IO
     if (!fCnsays)
-        cerr << __FUNCTION__
-             << ": solver says satisfiable, but constraint does not" << endl;
+        std::cerr << __FUNCTION__
+                  << ": solver says satisfiable, but constraint does not"
+                  << std::endl;
 #endif
     return true;
 }
 
 #ifndef CL_NO_ID
 
-ostream &PrintTo(ostream &xo,
-                 const ClSimplexSolver::ClEditInfoList &listPEditInfo) {
+std::ostream &PrintTo(std::ostream &xo,
+                      const ClSimplexSolver::ClEditInfoList &listPEditInfo) {
     ClSimplexSolver::ClEditInfoList::const_iterator it = listPEditInfo.begin();
     for (; it != listPEditInfo.end(); ++it) {
         const ClSimplexSolver::ClEditInfo *pcei = (*it);
-        xo << *pcei << endl;
+        xo << *pcei << std::endl;
     }
     return xo;
 }
 
-ostream &operator<<(ostream &xo,
-                    const ClSimplexSolver::ClEditInfoList &listPEditInfo) {
+std::ostream &operator<<(std::ostream &xo,
+                         const ClSimplexSolver::ClEditInfoList &listPEditInfo) {
     return PrintTo(xo, listPEditInfo);
 }
 

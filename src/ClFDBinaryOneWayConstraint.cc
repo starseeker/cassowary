@@ -58,7 +58,7 @@ bool ClFDBinaryOneWayConstraint::FCanConvertCn(const ClConstraint &cn) {
 ClFDBinaryOneWayConstraint::ClFDBinaryOneWayConstraint(const ClConstraint &cn)
     : ClFDConstraint(cn.strength(), cn.weight()) {
     EnsurePreconditionsForCn(cn);
-    list<FDNumber> l;
+    std::list<FDNumber> l;
     /* GJB:FIXME:: varargs inteface, with sentinel as first arg? */
     l.push_back(9);
     l.push_back(10);

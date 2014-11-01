@@ -28,20 +28,20 @@
 #include "ClStrength.h"
 #include "ClLinearExpression_fwd.h"
 
-using namespace std;
-
 class ClConstraint;
 
 class ClVarLookupFunction
-    : public unary_function<const string &, ClVariable *> {
+    : public std::unary_function<const std::string &, ClVariable *> {
   public:
-    virtual ClVariable *operator()(const string &) const { return &clvNil; }
+    virtual ClVariable *operator()(const std::string &) const {
+        return &clvNil;
+    }
 };
 
 // Attempts to read a constraint of input stream in
 // Returns constraint (freshly allocated, client responsibility to deallocate)
 // if succesful. Otherwise, returns 0.
-ClConstraint *PcnParseConstraint(istream &xi,
+ClConstraint *PcnParseConstraint(std::istream &xi,
                                  const ClVarLookupFunction &lookup_func,
                                  const ClStrength &strength = ClsRequired());
 
@@ -50,7 +50,7 @@ class ClVarLookupInMap : public ClVarLookupFunction {
     ClVarLookupInMap(StringToVarMap *pmapVars, bool fAutoCreate)
         : _pmapVars(pmapVars), _fAutoCreate(fAutoCreate) {}
 
-    ClVariable *operator()(const string &str) const {
+    ClVariable *operator()(const std::string &str) const {
         if (!_pmapVars)
             return &clvNil;
         StringToVarMap &_mapVars = *_pmapVars;
@@ -80,20 +80,21 @@ class ClVarLookupInMap : public ClVarLookupFunction {
 void clerror(const char *sz);
 
 struct ClParseData {
-    ClParseData(istream &xi, const ClVarLookupFunction &lookup_func)
+    ClParseData(std::istream &xi, const ClVarLookupFunction &lookup_func)
         : _xi(xi), _lookup_func(lookup_func) {}
 
     ClConstraint *Pcn() { return _pcn; }
 
     ClVarSet _readOnlyVarsSoFar;
 
-    istream &_xi;
+    std::istream &_xi;
     ClConstraint *_pcn;
     const ClVarLookupFunction &_lookup_func;
 };
 
 inline const ClStrength &ClsFromSz(const char *sz) throw(ExCLParseErrorMisc) {
     const ClStrength *pcls = &ClsRequired();
+
     double n1, n2, n3;
     if (strcasecmp("required", sz) == 0)
         ; /* initialized to ClsRequired, above */
@@ -103,7 +104,7 @@ inline const ClStrength &ClsFromSz(const char *sz) throw(ExCLParseErrorMisc) {
         pcls = &ClsMedium();
     } else if (strcasecmp("weak", sz) == 0) {
         pcls = &ClsWeak();
-    } else if (sscanf(sz, "(%lf,%lf,%lf)", &n1, &n2, &n3) == 3) {
+    } else if (sscanf_s(sz, "(%lf,%lf,%lf)", &n1, &n2, &n3) == 3) {
         pcls = new ClStrength("parsed", n1, n2, n3);
     } else {
         throw ExCLParseErrorMisc("Error parsing strength");

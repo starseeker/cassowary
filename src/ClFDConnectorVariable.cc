@@ -19,7 +19,7 @@
 
 // Use < > for ClFDConnector-s, instead of [ ]
 #ifndef CL_NO_IO
-ostream &ClFDConnectorVariable::PrintOn(ostream &xo) const {
+std::ostream &ClFDConnectorVariable::PrintOn(std::ostream &xo) const {
     xo << "<" << Name() << "=" << Value() << "{" << _clvFloat << "}"
        << ":" << *PlfdnDomain() << ">";
     return xo;

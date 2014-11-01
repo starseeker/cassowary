@@ -34,7 +34,7 @@ class ClEditConstraint : public ClEditOrStayConstraint {
     virtual bool IsEditConstraint() const { return true; }
 
 #ifndef CL_NO_IO
-    virtual ostream &PrintOn(ostream &xo) const {
+    virtual std::ostream &PrintOn(std::ostream &xo) const {
         super::PrintOn(xo);
         return xo << "= edit)";
     }

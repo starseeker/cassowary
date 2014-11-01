@@ -24,8 +24,6 @@
 #include "ClVariable.h"
 #include "ClLinearExpression_fwd.h"
 
-using namespace std;
-
 class ClSimplexSolver;
 class ClTableau;
 class ClSymbolicWeight;
@@ -224,10 +222,10 @@ class ClGenericLinearExpression {
     bool IsConstant() const { return _terms.size() == 0; }
 
 #ifndef CL_NO_IO
-    virtual ostream &PrintOn(ostream &xo) const;
+    virtual std::ostream &PrintOn(std::ostream &xo) const;
 
-    friend ostream &operator<<(ostream &xo,
-                               const ClGenericLinearExpression<T> &cle) {
+    friend std::ostream &operator<<(std::ostream &xo,
+                                    const ClGenericLinearExpression<T> &cle) {
         return cle.PrintOn(xo);
     }
 #endif

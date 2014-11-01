@@ -19,7 +19,7 @@
 
 // Use < > for ClFDVariable-s, instead of [ ]
 #ifndef CL_NO_IO
-ostream &ClFDVariable::PrintOn(ostream &xo) const {
+std::ostream &ClFDVariable::PrintOn(std::ostream &xo) const {
     xo << "<" << Name() << "=" << Value() << ":" << *PlfdnDomain() << ">";
     return xo;
 }
