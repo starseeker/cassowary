@@ -39,7 +39,8 @@ class ClLinearInequality : public ClLinearConstraint {
     ClLinearInequality(const ClVariable clv, ClCnRelation op,
                        const ClLinearExpression &cle,
                        const ClStrength &strength = ClsRequired(),
-                       double weight = 1.0) throw(ExCLEditMisuse)
+                       double weight = 1.0) 
+		// handle exceptions: ExCLEditMisuse
         : ClLinearConstraint(cle, strength, weight), _fStrictInequality(false) {
         if (op == cnGEQ || op == cnGT) {
             _expression.MultiplyMe(-1.0);

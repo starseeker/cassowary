@@ -47,10 +47,11 @@ ClSimplexSolver::~ClSimplexSolver() {
 }
 
 // Add the constraint cn to the tableau
-ClSimplexSolver &ClSimplexSolver::AddConstraint(ClConstraint *const pcn) throw(
-    ExCLTooDifficultSpecial, ExCLStrictInequalityNotAllowed,
-    ExCLReadOnlyNotAllowed, ExCLEditMisuse, ExCLRequiredFailure,
-    ExCLRequiredFailureWithExplanation, ExCLInternalError) {
+ClSimplexSolver &ClSimplexSolver::AddConstraint(ClConstraint *const pcn)
+// handle exceptions: ExCLTooDifficultSpecial, ExCLStrictInequalityNotAllowed,
+//				      ExCLReadOnlyNotAllowed, ExCLEditMisuse, ExCLRequiredFailure,
+//					  ExCLRequiredFailureWithExplanation, ExCLInternalError)
+{
 #ifdef CL_TRACE
     Tracer TRACER(__FUNCTION__);
     cerr << "(" << *pcn << ")" << endl;
@@ -221,7 +222,7 @@ ClSimplexSolver &ClSimplexSolver::RemoveEditVarsTo(int n) {
 #endif
         qclv.pop();
     }
-    while (_editInfoList.size() > n) {
+    while (static_cast<int>(_editInfoList.size()) > n) {
         _editInfoList.pop_back();
     }
 
@@ -245,7 +246,9 @@ class VarInVarSet : public std::unary_function<ClVariable, bool> {
 // Remove the constraint cn from the tableau
 // Also remove any error variable associated with cn
 ClSimplexSolver &ClSimplexSolver::RemoveConstraintInternal(
-    const ClConstraint *const pcn) throw(ExCLConstraintNotFound) {
+    const ClConstraint *const pcn)
+ 	// handle exceptions: ExCLConstraintNotFound
+{
 #ifdef CL_TRACE
     Tracer TRACER(__FUNCTION__);
     cerr << "(" << *pcn << ")" << endl;
@@ -491,7 +494,9 @@ void ClSimplexSolver::Resolve() { // CODE DUPLICATED ABOVE
 }
 
 ClSimplexSolver &ClSimplexSolver::SuggestValue(ClVariable v,
-                                               Number x) throw(ExCLEditMisuse) {
+                                               Number x)
+	// handle exceptions: ExCLEditMisuse
+{
 #ifdef CL_TRACE
     Tracer TRACER(__FUNCTION__);
 #endif
@@ -523,7 +528,7 @@ ClSimplexSolver &ClSimplexSolver::SuggestValue(ClVariable v,
 // DEPRECATED
 void ClSimplexSolver::Resolve(const std::vector<Number> &newEditConstants) {
     ClEditInfoList::iterator it = _editInfoList.begin();
-    int i = 0;
+    unsigned int i = 0;
     for (; i < newEditConstants.size() && it != _editInfoList.end();
          ++it, ++i) {
         ClEditInfo *pcei = (*it);
@@ -676,9 +681,10 @@ void ClSimplexSolver::BuildExplanation(ExCLRequiredFailureWithExplanation &e,
 // tableau.  Try to Add expr directly to the tableaus without
 // creating an artificial variable.  Return true if successful and
 // false if not.
-bool ClSimplexSolver::TryAddingDirectly(ClLinearExpression &expr) throw(
-    ExCLRequiredFailureWithExplanation, ExCLInternalError,
-    ExCLRequiredFailure) {
+bool ClSimplexSolver::TryAddingDirectly(ClLinearExpression &expr)
+// handle exceptions: ExCLRequiredFailureWithExplanation, ExCLInternalError,
+//					  ExCLRequiredFailure)
+{
 #ifdef CL_TRACE
     Tracer TRACER(__FUNCTION__);
     cerr << "(" << expr << ")" << endl;
@@ -719,9 +725,10 @@ bool ClSimplexSolver::TryAddingDirectly(ClLinearExpression &expr) throw(
 // ignore whether a variable occurs in the objective function, since
 // new slack variables are added to the objective function by
 // 'NewExpression:', which is called before this method.
-ClVariable ClSimplexSolver::ChooseSubject(ClLinearExpression &expr) throw(
-    ExCLRequiredFailureWithExplanation, ExCLInternalError,
-    ExCLRequiredFailure) {
+ClVariable ClSimplexSolver::ChooseSubject(ClLinearExpression &expr)
+// handle exceptions: ExCLRequiredFailureWithExplanation, ExCLInternalError,
+//					  ExCLRequiredFailure)
+{
 #ifdef CL_TRACE
     Tracer TRACER(__FUNCTION__);
     cerr << "(" << expr << ")" << endl;
@@ -1362,7 +1369,8 @@ std::ostream &operator<<(std::ostream &xo, const ClSimplexSolver &clss) {
 
 bool
 ClSimplexSolver::FIsConstraintSatisfied(const ClConstraint *const pcn) const
-    throw(ExCLConstraintNotFound) {
+// handle exceptions: ExCLConstraintNotFound
+{
     ClConstraintToVarMap::const_iterator it_marker = _markerVars.find(pcn);
     if (it_marker == _markerVars.end()) { // could not find the constraint
         throw ExCLConstraintNotFound();

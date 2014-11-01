@@ -20,11 +20,17 @@
 #endif
 
 #ifdef CL_USE_HASH_MAP_AND_SET
-#include <hash_set>
-#define ClSet std::hash_set // FIXME: std::unordered_set
+#include <unordered_set>
+
+template< typename T >
+using ClSet = std::unordered_set<T>;
+
 #else
 #include <set>
-#define ClSet std::set
+
+template< typename T, typename Predicate = std::less<T>, typename Allocator = std::allocator<T> >
+using ClSet = std::set<T, Predicate, Allocator>;
+
 #endif
 
 #endif

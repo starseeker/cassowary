@@ -20,11 +20,17 @@
 #endif
 
 #ifdef CL_USE_HASH_MAP_AND_SET
-#include <hash_map>
-#define ClMap std::hash_map // FIXME: unordered_map
+#include <unordered_map>
+
+template< typename Key, typename Value, typename Predicate = std::less<Key>, typename Allocator = std::allocator<std::pair<Key,Value>> >
+using ClMap = std::unordered_map<Key, Value, Predicate, Allocator>;
+
 #else
 #include <map>
-#define ClMap std::map
+
+template< typename Key, typename Value, typename Predicate = std::less<Key>, typename Allocator = std::allocator<std::pair<const Key,Value>> >
+using ClMap = std::map<Key, Value, Predicate, Allocator>;
+
 #endif
 
 #endif

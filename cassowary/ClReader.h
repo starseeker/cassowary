@@ -92,7 +92,9 @@ struct ClParseData {
     const ClVarLookupFunction &_lookup_func;
 };
 
-inline const ClStrength &ClsFromSz(const char *sz) throw(ExCLParseErrorMisc) {
+inline const ClStrength &ClsFromSz(const char *sz)
+	// handle exceptions: ExCLParseErrorMisc
+{
     const ClStrength *pcls = &ClsRequired();
 
     double n1, n2, n3;

@@ -124,7 +124,9 @@ class ClConstraint {
 
     virtual bool FIsOkayForSimplexSolver() const { return true; }
 
-    void ChangeStrength(const ClStrength &strength) throw(ExCLTooDifficult) {
+    void ChangeStrength(const ClStrength &strength)
+		// handle exceptions: ExCLTooDifficult
+	{
         if (_times_added == 0) {
             setStrength(strength);
         } else {
@@ -132,7 +134,9 @@ class ClConstraint {
         }
     }
 
-    void ChangeWeight(double weight) throw(ExCLTooDifficult) {
+    void ChangeWeight(double weight)
+		// handle exceptions: ExCLTooDifficult
+	{
         if (_times_added == 0) {
             setWeight(weight);
         } else {
