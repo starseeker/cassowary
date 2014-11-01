@@ -20,4 +20,3 @@ long ClAbstractVariable::iVariableNumber = 0;
 #ifdef CL_FIND_LEAK
 long ClAbstractVariable::cAbstractVariables = 0;
 #endif
-
