@@ -17,5 +17,4 @@
 #endif
 
 StringToVarMap *ClVariable::pmapStrPclv = NULL;
-ClVariable clvNil(static_cast<ClAbstractVariable*>(0));
-
+ClVariable clvNil(static_cast<ClAbstractVariable *>(0));
