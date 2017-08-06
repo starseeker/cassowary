@@ -8,6 +8,6 @@ For an overview, see http://overconstrained.io/
 
 For C/C++, current projects appear to be:
 
-https://github.com/nucleic/kiwi
-https://github.com/Nocte-/rhea
-https://github.com/starwing/amoeba
+- https://github.com/nucleic/kiwi
+- https://github.com/Nocte-/rhea
+- https://github.com/starwing/amoeba
