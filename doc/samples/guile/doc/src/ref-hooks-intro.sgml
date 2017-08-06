@@ -1,6 +1,0 @@
-<!-- $Id: ref-hooks-intro.sgml,v 1.1 2000/03/13 00:51:55 gjb Exp $ -->
-<!-- Hooks Chapter Introduction -->
-<para>
-This chapter lists the hooks provided by Cassowary/Guile
-ordered alphabetically by name.
-</para>
